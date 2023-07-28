@@ -18,15 +18,23 @@ class Encryptor
   end
 
   def encrypt(string)
-    # 1. Cut the input string into letters
     letters = string.split('')
-    # 2. Encrypt those letters one at a time, gathering the results
-    results = []
-    letters.each do |letter|
-      encrypted_letter = encrypt_letter(letter)
-      results.push(encrypted_letter)
+
+    result = []
+    letters.collect do |letter|
+      result.push(encrypt_letter(letter))
     end
-    # 3. Join the results back together in one string
-    results.join
+    result.join
+  end
+
+  def decrypt(string)
+    letters = string.split('')
+
+    result = []
+
+    letters.collect do |letter|
+      result.push(cipher.key(letter))
+    end
+    result.join
   end
 end
