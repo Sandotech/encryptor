@@ -33,4 +33,24 @@ class Encryptor
     end
     result.join
   end
+
+  def encrypt_file(filename, rotation)
+    input = File.open(filename, 'r')
+    content = input.rewind && input.read
+    output_content = encrypt(content, rotation)
+    input.close
+    output_file = File.open("#{filename}.encrypted", 'w')
+    output_file.write(output_content)
+    output_file.close
+  end
+
+  def decrypt_file(filename, rotation)
+    encrypted_file = File.open(filename, 'r')
+    encrypted_content = encrypted_file.rewind && encrypted_file.read
+    decrypted_content = decrypt(encrypted_content, rotation)
+    encrypted_file.close
+    decrypt_file = File.open(filename.gsub('.encrypted', '.decrypted'), 'w')
+    decrypt_file.write(decrypted_content)
+    decrypt_file.close
+  end
 end
